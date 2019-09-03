@@ -31,7 +31,13 @@
     </van-cell-group>
     <!-- 登录按钮 -->
     <div class="login-btn">
-      <van-button class="btn" type="info" @click="handleLogin">登录</van-button>
+      <van-button
+        :loading="loading"
+        loading-type="spinner"
+        loading-text="正在登录..."
+        class="btn"
+        type="info"
+        @click="handleLogin">登录</van-button>
     </div>
   </div>
 </template>
@@ -46,7 +52,9 @@ export default {
       user: {
         mobile: '13911111111',
         code: '246810'
-      }
+      },
+      // 控制按钮是否显示正在登录
+      loading: false
     }
   },
   created () {
@@ -72,12 +80,14 @@ export default {
     ...mapMutations(['setUser']),
     // 点击按钮，处理登录
     async handleLogin () {
+      this.loading = true
       try {
         // 表单验证
         // validate() 返回的是promise对象，所以可以使用await调用
         const valid = await this.$validator.validate()
         // 验证失败
         if (!valid) {
+          this.loading = false
           return
         }
         // 验证成功
@@ -90,6 +100,7 @@ export default {
       } catch (err) {
         this.$toast.fail('登录失败')
       }
+      this.loading = false
     }
   }
 }
