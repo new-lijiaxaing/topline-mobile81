@@ -73,19 +73,21 @@ export default {
     // 点击按钮，处理登录
     async handleLogin () {
       try {
-        // data 就是接口返回数据中的data（因为响应拦截器做了处理）
-        // token refresh_token
-        const data = await login(this.user)
-        // 存储登录的状态
-        // 1. vuex
-        // 2. 本地存储
-        // --- 以上两件事儿 都是在store中完成----
-        // this.$store.commit('setUser', data)
-        this.setUser(data)
-
-        // 跳转到首页
-        this.$router.push('/')
-        this.$toast.success('登录成功')
+        // 表单验证
+        this.$validator.validate().then(async valid => {
+          // 验证失败
+          if (!valid) {
+            // do stuff if not valid.
+            return
+          }
+          // 验证成功
+          const data = await login(this.user)
+          // 存储登录的状态
+          this.setUser(data)
+          // 跳转到首页
+          this.$router.push('/')
+          this.$toast.success('登录成功')
+        })
       } catch (err) {
         this.$toast.fail('登录失败')
       }
