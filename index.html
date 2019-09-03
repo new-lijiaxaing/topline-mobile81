@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 演示快和慢
+    console.log('start')
+    var str = ''
+    var arr = []
+    for (var i = 0; i < 1000000; i++){
+      // 循环的操作最快  cpu的操作 最快
+
+      // 数组的操作比字符串拼接速度要快    内存中的操作其次
+      // str += i
+      // arr.push(i)
+
+      // 操作计算机的外部设备速度慢（硬盘，屏幕）
+      // console.log(i)
+      // 读取文件
+
+      // 操作网络（ajax）  网络操作最慢
+    }
+    console.log('end')
+  </script>
+</body>
+</html>
