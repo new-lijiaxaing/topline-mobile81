@@ -8,7 +8,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      name: 'tabbar',
+      // name: 'tabbar',
       path: '/',
       component: Tabbar,
       children: [
