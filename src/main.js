@@ -6,8 +6,12 @@ import Vant from 'vant'
 import VeeValidate, { Validator } from 'vee-validate'
 // 导入VeeValidate的中文包
 import zhCN from 'vee-validate/dist/locale/zh_CN'
+import { fmtDate } from '@/utils/dayjs'
 import 'vant/lib/index.css'
 import './styles/index.less'
+
+// 获取相对时间的过滤器
+Vue.filter('fmtDate', fmtDate)
 
 Vue.use(Vant)
 // 配置插件VeeValidate
