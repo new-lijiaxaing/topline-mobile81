@@ -14,8 +14,8 @@
         :key="channel.id">
         <!-- 文章列表,不同的标签页下有不同的列表 -->
         <van-list
-          v-model="loading"
-          :finished="finished"
+          v-model="currentChannel.loading"
+          :finished="currentChannel.finished"
           finished-text="没有更多了"
           @load="onLoad"
         >
@@ -69,6 +69,8 @@ export default {
         data.channels.forEach((channel) => {
           channel.timestamp = null
           channel.articles = []
+          channel.loading = false
+          channel.finished = false
         })
         this.channels = data.channels
       } catch (err) {
@@ -95,8 +97,14 @@ export default {
       this.currentChannel.timestamp = data.pre_timestamp
       // [[], []]
       this.currentChannel.articles.push(...data.results)
-
-      this.loading = false
+      // this.loading = false
+      this.currentChannel.loading = false
+      // 文章加载完毕
+      // 如果某一个频道加载完毕，其它频道中的finished 也是加载完毕
+      if (data.results.length === 0) {
+        // this.finished = true
+        this.currentChannel.finished = true
+      }
     }
   }
 }
