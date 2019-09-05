@@ -3,7 +3,7 @@
     value 是通过props传递，是单项的
 
     当dialog组件中input事件触发，说明要去更改value
-    
+
     @input="handleInput(i)"
    -->
   <van-dialog
@@ -34,12 +34,21 @@ export default {
     value: {
       type: Boolean,
       required: true
+    },
+    // 接收父组件传递的文章对象
+    article: {
+      type: Object,
+      required: true
     }
   },
   data () {
     return {
       showReports: false
     }
+  },
+  created () {
+    // 测试
+    console.log(this.article.art_id)
   }
 }
 </script>
