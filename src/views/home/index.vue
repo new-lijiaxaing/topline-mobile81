@@ -39,7 +39,14 @@
                     v-for="(img, index) in article.cover.images"
                     :key="img + index"
                   >
-                    <van-image height="80" :src="img" />
+                    <van-image lazy-load height="80" :src="img" >
+                      <!-- 图片的加载提示 -->
+                      <template v-slot:loading>
+                        <van-loading type="spinner" size="20" />
+                      </template>
+                      <!-- 自定义加载失败提示 -->
+                      <template v-slot:error>加载失败</template>
+                    </van-image>
                   </van-grid-item>
                 </van-grid>
                 <p>
@@ -62,7 +69,11 @@
 <script>
 import { getDefaultOrUserChannels } from '@/api/channel'
 import { getArticles } from '@/api/article'
+import Vue from 'vue'
+import { Lazyload } from 'vant'
 
+// options 为可选参数，无则不传
+Vue.use(Lazyload)
 export default {
   name: 'Home',
   data() {
