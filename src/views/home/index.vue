@@ -54,7 +54,7 @@
                   <span>{{ article.comm_count }}评论</span>&nbsp;
                   <span>{{ article.pubdate | fmtDate }}</span>&nbsp;
 
-                  <van-icon name="cross" class="close" />
+                  <van-icon name="cross" class="close" @click="showMoreAction=true" />
                 </p>
               </div>
             </van-cell>
@@ -63,7 +63,12 @@
       </van-tab>
     </van-tabs>
     <!-- 弹出层组件-moreAction -->
-    <more-action></more-action>
+    <!-- 
+      v-model 等价于
+      v-bind:value="showMoreAction"
+      v-on:input="showMoreAction = $event"
+     -->
+    <more-action v-model="showMoreAction"></more-action>
   </div>
 </template>
 
@@ -94,7 +99,8 @@ export default {
       // 通过该index，可以找到当前的频道对象
       activeIndex: 0,
       // 下拉更新完毕之后显示，成功的提示
-      successText: ''
+      successText: '',
+      showMoreAction: false
     };
   },
   created () {
