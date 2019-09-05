@@ -69,7 +69,11 @@
       v-on:input="showMoreAction = $event"
      -->
      <!-- 如果article的值为null 不显示more-action -->
-    <more-action v-if="currentArticle" :article="currentArticle" v-model="showMoreAction"></more-action>
+    <more-action
+      v-if="currentArticle"
+      @handleSuccess="handleSuccess"
+      :article="currentArticle"
+      v-model="showMoreAction"></more-action>
   </div>
 </template>
 
@@ -191,6 +195,21 @@ export default {
     handleAction (article) {
       this.showMoreAction = true
       this.currentArticle = article
+    },
+    // more-action中操作成功执行的方法
+    handleSuccess () {
+      // 隐藏
+      this.showMoreAction = false
+      // 去掉当前的文章数据
+      // this.currentArticle
+      // 找到当前文章在数组中的索引
+      // findIndex() 查找第一个满足条件的元素的索引
+      const articles = this.currentChannel.articles
+      const index = articles.findIndex((article) => {
+        return article.art_id === this.currentArticle.art_id
+      })
+      // 删除指定位置的元素
+      articles.splice(index, 1)
     }
   }
 }
