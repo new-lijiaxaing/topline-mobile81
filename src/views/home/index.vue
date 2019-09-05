@@ -29,7 +29,28 @@
               v-for="article in currentChannel.articles"
               :key="article.art_id.toString()"
               :title="article.title"
-            />
+            >
+              <div slot="label">
+                <!-- grid 显示封面
+                  article.cover.type   0 没有图片   1 1个图片 3 3个图片
+                 -->
+                <van-grid v-if="article.cover.type" :border="false" :column-num="3">
+                  <van-grid-item
+                    v-for="(img, index) in article.cover.images"
+                    :key="img + index"
+                  >
+                    <van-image height="80" :src="img" />
+                  </van-grid-item>
+                </van-grid>
+                <p>
+                  <span>{{ article.aut_name }}</span>&nbsp;
+                  <span>{{ article.comm_count }}评论</span>&nbsp;
+                  <span>{{ article.pubdate }}</span>&nbsp;
+
+                  <van-icon name="cross" class="close" />
+                </p>
+              </div>
+            </van-cell>
           </van-list>
         </van-pull-refresh>
       </van-tab>
@@ -167,5 +188,8 @@ export default {
     margin-top: 90px;
     margin-bottom: 50px;
   }
+}
+.close {
+  float: right;
 }
 </style>
