@@ -21,7 +21,7 @@
         >
           <van-cell
             v-for="article in currentChannel.articles"
-            :key="article.art_id"
+            :key="article.art_id.toString()"
             :title="article.title"
           />
         </van-list>
@@ -39,10 +39,10 @@ export default {
   name: 'Home',
   data() {
     return {
-      // 列表用的数据
-      list: [],
-      loading: false,
-      finished: false,
+      // // 列表用的数据
+      // list: [],
+      // loading: false,
+      // finished: false,
       // 频道列表
       channels: [],
       // tab是组件中默认显示的tab项的索引
@@ -65,6 +65,7 @@ export default {
     async loadChannels () {
       try {
         const data = await getDefaultOrUserChannels()
+        // console.log(data)
         // 给所有的频道设置，时间戳和文章数组
         data.channels.forEach((channel) => {
           channel.timestamp = null
