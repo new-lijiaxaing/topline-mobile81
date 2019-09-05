@@ -20,9 +20,9 @@
           @load="onLoad"
         >
           <van-cell
-            v-for="item in list"
-            :key="item"
-            :title="item"
+            v-for="article in currentChannel.articles"
+            :key="article.art_id"
+            :title="article.title"
           />
         </van-list>
       </van-tab>
@@ -33,6 +33,7 @@
 
 <script>
 import { getDefaultOrUserChannels } from '@/api/channel'
+import { getArticles } from '@/api/article'
 
 export default {
   name: 'Home',
@@ -53,31 +54,49 @@ export default {
     // 加载频道列表
     this.loadChannels()
   },
+  computed: {
+    // 返回当前的频道对象
+    currentChannel () {
+      return this.channels[this.activeIndex]
+    }
+  },
   methods: {
     // 加载频道列表
     async loadChannels () {
       try {
         const data = await getDefaultOrUserChannels()
+        // 给所有的频道设置，时间戳和文章数组
+        data.channels.forEach((channel) => {
+          channel.timestamp = null
+          channel.articles = []
+        })
         this.channels = data.channels
       } catch (err) {
         console.log(err)
       }
     },
     // list组件的load
-    onLoad() {
-      // 异步更新数据
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1);
-        }
-        // 加载状态结束
-        this.loading = false;
+    async onLoad() {
+      // 发送请求
+      // 获取当前频道对象  --- 下面不需要写了，因为设置了一个当前频道的计算属性
+      // const currentChannel = this.channels[this.activeIndex]
+      //  当前频道对象 时间戳
+      //  当前频道对象 文章数组
+      const data = await getArticles({
+        // 频道的id
+        channel_id: this.currentChannel.id,
+        // 时间戳
+        timestamp: this.currentChannel.timestamp || Date.now(),
+        // 是否包含置顶1，0不包含
+        with_top: 1
+      })
 
-        // 数据全部加载完成
-        if (this.list.length >= 40) {
-          this.finished = true;
-        }
-      }, 500);
+      // 记录文章列表，记录最后一条数据的时间戳
+      this.currentChannel.timestamp = data.pre_timestamp
+      // [[], []]
+      this.currentChannel.articles.push(...data.results)
+
+      this.loading = false
     }
   }
 }
