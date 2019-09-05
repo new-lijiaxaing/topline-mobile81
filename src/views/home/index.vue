@@ -14,7 +14,10 @@
         :key="channel.id">
 
         <!-- 下拉加载更多组件 -->
-        <van-pull-refresh v-model="currentChannel.pullLoading" @refresh="onRefresh">
+        <van-pull-refresh
+          :success-text="successText"
+          v-model="currentChannel.pullLoading"
+          @refresh="onRefresh">
           <!-- 文章列表,不同的标签页下有不同的列表 -->
           <van-list
             v-model="currentChannel.loading"
@@ -51,7 +54,9 @@ export default {
       channels: [],
       // tab是组件中默认显示的tab项的索引
       // 通过该index，可以找到当前的频道对象
-      activeIndex: 0
+      activeIndex: 0,
+      // 下拉更新完毕之后显示，成功的提示
+      successText: ''
     };
   },
   created () {
@@ -115,11 +120,25 @@ export default {
       }
     },
     // 下拉加载更多
-    onRefresh() {
-      setTimeout(() => {
-        this.$toast('刷新成功');
+    async onRefresh() {
+      try {
+        const data = await getArticles({
+          // 频道的id
+          channel_id: this.currentChannel.id,
+          // 时间戳
+          timestamp: Date.now(),
+          // 是否包含置顶1，0不包含
+          with_top: 1
+        })
+
+        // 设置加载完毕
         this.currentChannel.pullLoading = false
-      }, 500);
+        // 把数据放到数组的最前面（最新数据）
+        this.currentChannel.articles.unshift(...data.results)
+        this.successText = `加载了${data.results.length}条数据`
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 }
