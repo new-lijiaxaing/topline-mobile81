@@ -62,7 +62,8 @@
         </van-pull-refresh>
       </van-tab>
     </van-tabs>
-    
+    <!-- 弹出层组件-moreAction -->
+    <more-action></more-action>
   </div>
 </template>
 
@@ -71,11 +72,16 @@ import { getDefaultOrUserChannels } from '@/api/channel'
 import { getArticles } from '@/api/article'
 import Vue from 'vue'
 import { Lazyload } from 'vant'
-
 // options 为可选参数，无则不传
 Vue.use(Lazyload)
+// 加载moreaction组件
+import MoreAction from './components/MoreAction'
+
 export default {
   name: 'Home',
+  components: {
+    MoreAction
+  },
   data() {
     return {
       // // 列表用的数据
