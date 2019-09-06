@@ -72,9 +72,9 @@ export default {
           digits: '验证码必须是6位的数字'
         }
       }
-    };
+    }
     // or use the instance method
-    this.$validator.localize('custom', dict);
+    this.$validator.localize('custom', dict)
   },
   methods: {
     ...mapMutations(['setUser']),

@@ -9,6 +9,7 @@
     <van-tabs animated v-model="activeIndex">
       <!-- 遍历标签页，显示频道列表 -->
       <van-tab
+        type="line"
         v-for="channel in channels"
         :title="channel.name"
         :key="channel.id">
@@ -63,7 +64,7 @@
       </van-tab>
     </van-tabs>
     <!-- 弹出层组件-moreAction -->
-    <!-- 
+    <!--
       v-model 等价于
       v-bind:value="showMoreAction"
       v-on:input="showMoreAction = $event"
@@ -82,17 +83,17 @@ import { getDefaultOrUserChannels } from '@/api/channel'
 import { getArticles } from '@/api/article'
 import Vue from 'vue'
 import { Lazyload } from 'vant'
-// options 为可选参数，无则不传
-Vue.use(Lazyload)
 // 加载moreaction组件
 import MoreAction from './components/MoreAction'
+// options 为可选参数，无则不传
+Vue.use(Lazyload)
 
 export default {
   name: 'Home',
   components: {
     MoreAction
   },
-  data() {
+  data () {
     return {
       // // 列表用的数据
       // list: [],
@@ -108,7 +109,7 @@ export default {
       showMoreAction: false,
       // 点击x的时候，记录的当前文章对象
       currentArticle: null
-    };
+    }
   },
   created () {
     // 加载频道列表
@@ -142,7 +143,7 @@ export default {
       }
     },
     // list组件的load
-    async onLoad() {
+    async onLoad () {
       // 发送请求
       // 获取当前频道对象  --- 下面不需要写了，因为设置了一个当前频道的计算属性
       // const currentChannel = this.channels[this.activeIndex]
@@ -171,7 +172,7 @@ export default {
       }
     },
     // 下拉加载更多
-    async onRefresh() {
+    async onRefresh () {
       try {
         const data = await getArticles({
           // 频道的id
@@ -232,6 +233,7 @@ export default {
     position: fixed;
     top: 46px;
     left: 0;
+    right: 10px;
     z-index: 100;
   }
   /deep/ .van-tabs__content {

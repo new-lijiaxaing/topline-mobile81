@@ -14,7 +14,7 @@ export default new Vuex.Store({
     // 通过mutation改变状态
     setUser (state, user) {
       state.user = user
-      
+
       // 把登录状态存储到本地存储中
       storageTools.setItem('user', user)
     }
