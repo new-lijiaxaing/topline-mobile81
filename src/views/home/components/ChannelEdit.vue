@@ -146,13 +146,18 @@ export default {
     },
     // 点击推荐频道的时候
     async handleChannelItem (channel) {
-      channel.timestamp = null
-      channel.articles = []
-      // 上拉加载
-      channel.loading = false
-      channel.finished = false
-      // 下拉加载
-      channel.pullLoading = false
+      this.$set(channel, 'timestamp', null)
+      this.$set(channel, 'articles', [])
+      this.$set(channel, 'loading', false)
+      this.$set(channel, 'finished', false)
+      this.$set(channel, 'pullLoading', false)
+      // channel.timestamp = null
+      // channel.articles = []
+      // // 上拉加载
+      // channel.loading = false
+      // channel.finished = false
+      // // 下拉加载
+      // channel.pullLoading = false
       // 1. 把channel添加到我的频道
       this.channels.push(channel)
       console.log(this.channels)
