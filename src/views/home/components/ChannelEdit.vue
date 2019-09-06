@@ -38,7 +38,7 @@
           slot="icon"
           class="close-icon"
           name="close"
-          v-show="isEdit"
+          v-show="isEdit && index !== 0"
         />
       </van-grid-item>
     </van-grid>
@@ -56,6 +56,8 @@
 
 <script>
 import { getAllChannels } from '@/api/channel'
+import { mapState } from 'vuex'
+import { setItem } from '@/utils/localStorage'
 
 export default {
   name: 'ChannelEdit',
@@ -76,6 +78,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['user']),
     // 推荐频道
     recommendChannels () {
       // 1. 获取我的频道中所有id组成的数组
@@ -124,6 +127,16 @@ export default {
       }
 
       // 2. 编辑模式
+      // 2.1 把点击的频道，从我的频道移除
+      this.channels.splice(index, 1)
+      // 2.2 判断是否登录
+      // 通过mapstate 做了映射
+      if (this.user) {
+        // 2.3 如果登录，发送请求
+        return
+      }
+      // 2.4 没有登录，把频道列表记录到本地存储
+      setItem('channels', this.channels)
     }
   }
 }
