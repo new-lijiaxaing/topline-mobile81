@@ -7,25 +7,31 @@
   <title>Document</title>
 </head>
 <body>
+  <div id="app">
+    {{ value }}
+    {{ channel.name }}
+    {{ channel.age }}
+    <input type="text" v-model="value">
+  </div>
+  <script src="./node_modules/vue/dist/vue.js"></script>
   <script>
-    // 演示快和慢
-    console.log('start')
-    var str = ''
-    var arr = []
-    for (var i = 0; i < 1000000; i++){
-      // 循环的操作最快  cpu的操作 最快
-
-      // 数组的操作比字符串拼接速度要快    内存中的操作其次
-      // str += i
-      // arr.push(i)
-
-      // 操作计算机的外部设备速度慢（硬盘，屏幕）
-      // console.log(i)
-      // 读取文件
-
-      // 操作网络（ajax）  网络操作最慢
-    }
-    console.log('end')
+    // 演示动态给data中增加的成员是非响应式的
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        value: '...',
+        channel: {
+          name: 'xxxx'
+        }
+      },
+      created() {
+        // this.channel.age = 18
+        // 第一个参数，给哪个对象增加响应式属性
+        // 第二个参数，响应式属性的名字
+        // 第三个参数，是值
+        this.$set(this.channel, 'age', 18)
+      }
+    })
   </script>
 </body>
 </html>
