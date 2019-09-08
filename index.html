@@ -27,25 +27,25 @@
     //   f()
     // }, 100);
 
-    // 模拟函数防抖的实现
-    function debounce (fn, delay) {
-      // 记录上一次定时器的id
-      var timerId
-      return function () {
-        // arguments 获取到所有参数
-        // obj.say() --> this --> obj
-        // console.log('debounce --', this)
-        clearTimeout(timerId)
-        timerId = setTimeout(() => {
-          // window.fn()
-          // fn(1, 2)
-          // fn.call(this, ...arguments)
-          // 箭头函数中的this是外部函数的this
-          // 箭头函数中的arguments是外部函数的arguments
-          fn.apply(this, arguments)   // --->  fn(1, 2)
-        }, delay)
-      }
-    }
+    // // 模拟函数防抖的实现
+    // function debounce (fn, delay) {
+    //   // 记录上一次定时器的id
+    //   var timerId
+    //   return function () {
+    //     // arguments 获取到所有参数
+    //     // obj.say() --> this --> obj
+    //     // console.log('debounce --', this)
+    //     clearTimeout(timerId)
+    //     timerId = setTimeout(() => {
+    //       // window.fn()
+    //       // fn(1, 2)
+    //       // fn.call(this, ...arguments)
+    //       // 箭头函数中的this是外部函数的this
+    //       // 箭头函数中的arguments是外部函数的arguments
+    //       fn.apply(this, arguments)   // --->  fn(1, 2)
+    //     }, delay)
+    //   }
+    // }
 
     // 测试
     // var fn = debounce(function () {
@@ -63,22 +63,80 @@
     //   fn()
     // }, 100);
 
-    var obj = {
-      name: 'zs',
-      say: debounce(function (a, b) {
-        console.log(a + b)
-        console.log(this)
-        console.log('say')
-      }, 300)
-    }
+    // var obj = {
+    //   name: 'zs',
+    //   say: debounce(function (a, b) {
+    //     console.log(a + b)
+    //     console.log(this)
+    //     console.log('say')
+    //   }, 300)
+    // }
 
     // var fn = debounce(obj.say, 300)
     // fn(1, 2)
     // fn(1, 2)
     // fn(1, 2)
 
-    obj.say(1,2)
+    // obj.say(1,2)
 
+    // 函数节流：让函数在一定时间内只执行一次
+    //         首先先执行一次fn，等时间到达之后再执行一次fn
+    // var fn = _.throttle(function () {
+    //   console.log('throttle')
+    // }, 300)
+
+    // fn()
+    // fn()
+    // fn()
+    // fn()
+    // fn()
+
+    // setInterval(() => {
+    //   console.log('-------------')
+    //   fn()
+    // }, 100)
+
+    // 模拟函数防抖: 首先执行一次函数，不管调用多少次时间到达之后执行一次
+    function throttle (fn, delay) {
+      // 当前时间，是否 >= 最后一次调用的时间 + delay
+      var timerId, last
+      return function () {
+        var now = Date.now()
+        // 判断时间是否到达
+        if (last && now < last + delay) {
+          // 时间没有到达
+          clearTimeout(timerId)
+          timerId = setTimeout(() => {
+            // fn()
+            fn.apply(this, arguments)
+          }, delay)
+        } else {
+          // 时间到达，或者是第一次调用
+          last = now
+          // fn()
+          fn.apply(this, arguments)
+        }
+      }
+    }
+
+
+    var fn = throttle(function () {
+      console.log('throttle')
+    }, 300)
+
+
+    // fn()
+    // fn()
+    // fn()
+    // fn()
+    // fn()
+    // fn()
+    // fn()
+
+    setInterval(() => {
+      console.log('-------------')
+      fn()
+    }, 100);
   </script>
 </body>
 </html>
