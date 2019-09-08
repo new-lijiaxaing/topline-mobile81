@@ -95,7 +95,11 @@ export default {
         // 存储登录的状态
         this.setUser(data)
         // 跳转到首页
-        this.$router.push('/')
+        // 获取url上查询字符串 redirect
+        // 如果获取到redirect，跳转到redirect指向的地址
+        // 如果没有redirect跳转到首页
+
+        this.$router.push(this.$route.query.redirect || '/')
         this.$toast.success('登录成功')
       } catch (err) {
         this.$toast.fail('登录失败')
