@@ -40,6 +40,8 @@
           // window.fn()
           // fn(1, 2)
           // fn.call(this, ...arguments)
+          // 箭头函数中的this是外部函数的this
+          // 箭头函数中的arguments是外部函数的arguments
           fn.apply(this, arguments)   // --->  fn(1, 2)
         }, delay)
       }
