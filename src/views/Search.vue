@@ -12,13 +12,16 @@
       background="#3e9df8"
     />
     <!-- 搜索提示 -->
+    <!-- 只有v-html指令能够渲染标签，其它任何指令都不可以渲染标签，会把标签进行转义 -->
     <van-cell-group v-show="value">
       <van-cell
         @click="onSearch(item)"
         v-for="item in suggestionList"
         :key="item"
-        :title="item"
-        icon="search"/>
+        icon="search">
+        <!-- <div slot="title">{{ highlight(item) }}</div> -->
+        <div slot="title" v-html="highlight(item)"></div>
+      </van-cell>
     </van-cell-group>
 
     <!-- 历史记录 -->
@@ -105,6 +108,14 @@ export default {
     handleDelete (index) {
       this.histories.splice(index, 1)
       storageTools.setItem('history', this.histories)
+    },
+    // 高亮显示搜索建议中的匹配内容
+    highlight (item) {
+      // item 是提示项目
+      // this.value
+      const reg = new RegExp(this.value, 'gi')
+      // /abc/gi
+      return item.replace(reg, `<span style="color: red">${this.value}</span>`)
     }
   }
 }
