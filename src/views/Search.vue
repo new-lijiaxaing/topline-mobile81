@@ -35,6 +35,7 @@
         <van-icon v-show="!isEdit" @click="isEdit=true" name="delete" size="18px" />
       </van-cell>
       <van-cell
+        @click="onSearch(item)"
         v-for="(item, index) in histories"
         :key="item"
         :title="item">
@@ -76,6 +77,13 @@ export default {
   },
   methods: {
     onSearch (item) {
+      // 跳转到搜索结果页面
+      this.$router.push({
+        name: 'search-result',
+        params: {
+          q: item
+        }
+      })
       // 判断histories中是否已经存在item
       if (this.histories.includes(item)) {
         return
