@@ -32,17 +32,23 @@
       // 记录上一次定时器的id
       var timerId
       return function () {
+        // arguments 获取到所有参数
+        // obj.say() --> this --> obj
+        // console.log('debounce --', this)
         clearTimeout(timerId)
         timerId = setTimeout(() => {
-          fn()
+          // window.fn()
+          // fn(1, 2)
+          // fn.call(this, ...arguments)
+          fn.apply(this, arguments)   // --->  fn(1, 2)
         }, delay)
       }
     }
 
     // 测试
-    var fn = debounce(function () {
-      console.log('debounce')
-    }, 300)
+    // var fn = debounce(function () {
+    //   console.log('debounce')
+    // }, 300)
 
     // fn()
     // fn()
@@ -50,10 +56,27 @@
     // fn()
     // fn()
     // fn()
-    setInterval(() => {
-      console.log('------------')
-      fn()
-    }, 100);
+    // setInterval(() => {
+    //   console.log('------------')
+    //   fn()
+    // }, 100);
+
+    var obj = {
+      name: 'zs',
+      say: debounce(function (a, b) {
+        console.log(a + b)
+        console.log(this)
+        console.log('say')
+      }, 300)
+    }
+
+    // var fn = debounce(obj.say, 300)
+    // fn(1, 2)
+    // fn(1, 2)
+    // fn(1, 2)
+
+    obj.say(1,2)
+
   </script>
 </body>
 </html>
