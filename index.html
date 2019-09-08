@@ -7,31 +7,53 @@
   <title>Document</title>
 </head>
 <body>
-  <div id="app">
-    {{ value }}
-    {{ channel.name }}
-    {{ channel.age }}
-    <input type="text" v-model="value">
-  </div>
-  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script src="./node_modules/lodash/lodash.js"></script>
   <script>
-    // 演示动态给data中增加的成员是非响应式的
-    var vm = new Vue({
-      el: '#app',
-      data: {
-        value: '...',
-        channel: {
-          name: 'xxxx'
-        }
-      },
-      created() {
-        // this.channel.age = 18
-        // 第一个参数，给哪个对象增加响应式属性
-        // 第二个参数，响应式属性的名字
-        // 第三个参数，是值
-        this.$set(this.channel, 'age', 18)
+    // 函数防抖(debounce)：当频繁调用的时候，间隔一个很短的时间，当最后一次调用的时候延迟执行
+    // function fn() {
+    //   console.log('debounce')
+    // }
+    // // 返回一个防抖的方法
+    // const f =  _.debounce(fn, 300)
+
+    // f()
+    // f()
+    // f()
+    // f()
+    // f()
+
+    // setInterval(() => {
+    //   console.log('------------')
+    //   f()
+    // }, 100);
+
+    // 模拟函数防抖的实现
+    function debounce (fn, delay) {
+      // 记录上一次定时器的id
+      var timerId
+      return function () {
+        clearTimeout(timerId)
+        timerId = setTimeout(() => {
+          fn()
+        }, delay)
       }
-    })
+    }
+
+    // 测试
+    var fn = debounce(function () {
+      console.log('debounce')
+    }, 300)
+
+    // fn()
+    // fn()
+    // fn()
+    // fn()
+    // fn()
+    // fn()
+    setInterval(() => {
+      console.log('------------')
+      fn()
+    }, 100);
   </script>
 </body>
 </html>
