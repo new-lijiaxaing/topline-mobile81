@@ -71,9 +71,15 @@ instance.interceptors.response.use(function (response) {
       return instance(error.config)
     } catch (err) {
       console.log(err)
+      // console.log(router)
       // 跳转到首页
       // 如果refresh_token过期，跳转到登录页面
-      router.push('/login')
+      router.push({
+        path: '/login',
+        query: {
+          redirect: router.currentRoute.fullPath
+        }
+      })
     }
   }
   // Do something with response error
