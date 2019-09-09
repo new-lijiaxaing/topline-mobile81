@@ -24,6 +24,19 @@
   </table> -->
 
   <script>
+    // 文档对象的使用
+    // 创建了一个DocumentFragment，是内存中的 小document，不在文档树上
+    var fragment = document.createDocumentFragment()
+
+    var div = document.createElement('div')
+    div.innerHTML = 'DocumentFragment'
+    fragment.appendChild(div)
+
+    document.body.appendChild(fragment)
+
+
+
+
     function fn () {
       createTable(header, body)
     }

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <my-table :header="['姓名', '年龄']" :body="[{ name: 'zs', age: 18 }, { name: 'ls', age: 20 }]"></my-table>
+    <!-- <my-table :header="['姓名', '年龄']" :body="[{ name: 'zs', age: 18 }, { name: 'ls', age: 20 }]"></my-table> -->
     <!-- 使用keep-alive缓存动态切换的组件 -->
     <!-- 
       include - 字符串或正则表达式。只有名称匹配的组件会被缓存。
