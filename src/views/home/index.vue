@@ -81,7 +81,7 @@
       v-model="showMoreAction"></more-action>
 
     <!-- 弹出频道管理 -->
-    <channel-edit @activeChange="handleChange" :active="activeIndex" :channels="channels" v-model="showChannelEdit"></channel-edit>
+    <channel-edit @last="handleLast" @activeChange="handleChange" :active="activeIndex" :channels="channels" v-model="showChannelEdit"></channel-edit>
   </div>
 </template>
 
@@ -246,6 +246,10 @@ export default {
     handleChange (index) {
       this.activeIndex = index
       this.showChannelEdit = false
+    },
+    // 当频道管理删除的是，激活索引是数组最后一项的时候
+    handleLast () {
+      this.activeIndex--
     }
   }
 }
