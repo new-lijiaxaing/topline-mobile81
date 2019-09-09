@@ -6,137 +6,80 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
 </head>
+
 <body>
-  <script src="./node_modules/lodash/lodash.js"></script>
+  <input type="button" value="按钮" onclick="fn()">
+  <!-- <table>
+    <tr>
+      <th>序号</th>
+      <th>姓名</th>
+      <th>年龄</th>
+    </tr>
+
+    <tr>
+      <td>1</td>
+      <td>张三</td>
+      <td>18</td>
+    </tr>
+  </table> -->
+
   <script>
-    // 函数防抖(debounce)：当频繁调用的时候，间隔一个很短的时间，当最后一次调用的时候延迟执行
-    // function fn() {
-    //   console.log('debounce')
-    // }
-    // // 返回一个防抖的方法
-    // const f =  _.debounce(fn, 300)
-
-    // f()
-    // f()
-    // f()
-    // f()
-    // f()
-
-    // setInterval(() => {
-    //   console.log('------------')
-    //   f()
-    // }, 100);
-
-    // // 模拟函数防抖的实现
-    // function debounce (fn, delay) {
-    //   // 记录上一次定时器的id
-    //   var timerId
-    //   return function () {
-    //     // arguments 获取到所有参数
-    //     // obj.say() --> this --> obj
-    //     // console.log('debounce --', this)
-    //     clearTimeout(timerId)
-    //     timerId = setTimeout(() => {
-    //       // window.fn()
-    //       // fn(1, 2)
-    //       // fn.call(this, ...arguments)
-    //       // 箭头函数中的this是外部函数的this
-    //       // 箭头函数中的arguments是外部函数的arguments
-    //       fn.apply(this, arguments)   // --->  fn(1, 2)
-    //     }, delay)
-    //   }
-    // }
-
-    // 测试
-    // var fn = debounce(function () {
-    //   console.log('debounce')
-    // }, 300)
-
-    // fn()
-    // fn()
-    // fn()
-    // fn()
-    // fn()
-    // fn()
-    // setInterval(() => {
-    //   console.log('------------')
-    //   fn()
-    // }, 100);
-
-    // var obj = {
-    //   name: 'zs',
-    //   say: debounce(function (a, b) {
-    //     console.log(a + b)
-    //     console.log(this)
-    //     console.log('say')
-    //   }, 300)
-    // }
-
-    // var fn = debounce(obj.say, 300)
-    // fn(1, 2)
-    // fn(1, 2)
-    // fn(1, 2)
-
-    // obj.say(1,2)
-
-    // 函数节流：让函数在一定时间内只执行一次
-    //         首先先执行一次fn，等时间到达之后再执行一次fn
-    // var fn = _.throttle(function () {
-    //   console.log('throttle')
-    // }, 300)
-
-    // fn()
-    // fn()
-    // fn()
-    // fn()
-    // fn()
-
-    // setInterval(() => {
-    //   console.log('-------------')
-    //   fn()
-    // }, 100)
-
-    // 模拟函数防抖: 首先执行一次函数，不管调用多少次时间到达之后执行一次
-    function throttle (fn, delay) {
-      // 当前时间，是否 >= 最后一次调用的时间 + delay
-      var timerId, last
-      return function () {
-        var now = Date.now()
-        // 判断时间是否到达
-        if (last && now < last + delay) {
-          // 时间没有到达
-          clearTimeout(timerId)
-          timerId = setTimeout(() => {
-            // fn()
-            fn.apply(this, arguments)
-          }, delay)
-        } else {
-          // 时间到达，或者是第一次调用
-          last = now
-          // fn()
-          fn.apply(this, arguments)
-        }
-      }
+    function fn () {
+      createTable(header, body)
     }
+    var header = ['姓名', '年龄', '成绩']
+    var body = [
+      {
+        name: 'zs',
+        age: 18,
+        score: 100
+      },
+      {
+        name: 'ls',
+        age: 19,
+        score: 200
+      }
+    ]
 
+    // createTable(header, body)
 
-    var fn = throttle(function () {
-      console.log('throttle')
-    }, 300)
+    function createTable (header, body) {
+      // 判断页面上是否已经生产表格
+      var table = document.querySelector('#mytable')
+      if (table) {
+        return
+      }
 
+      table = document.createElement('table')
+      table.id = 'mytable'
+      document.body.appendChild(table)
 
-    // fn()
-    // fn()
-    // fn()
-    // fn()
-    // fn()
-    // fn()
-    // fn()
+      createTableHeader(table, header)
 
-    setInterval(() => {
-      console.log('-------------')
-      fn()
-    }, 100);
+      createTableBody(table, body)
+    }
+    
+    function createTableHeader (table, header) {
+      var tr = document.createElement('tr')
+      table.appendChild(tr)
+      header.forEach((item) => {
+        var th = document.createElement('th')
+        th.textContent = item
+        tr.appendChild(th)
+      })
+    }
+    function createTableBody (table, body) {
+      body.forEach((item) => {
+        var tr = document.createElement('tr')
+        table.appendChild(tr)
+        // 遍历对象
+        for (var key in item) {
+          var td = document.createElement('td')
+          td.textContent = item[key]
+          tr.appendChild(td)
+        }
+      })
+    }
   </script>
 </body>
 </html>
