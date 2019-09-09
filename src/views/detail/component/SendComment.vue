@@ -48,7 +48,10 @@ export default {
         })
 
         // 触发事件
-        eventHub.$emit('sendSuccess', data.new_obj)
+        eventHub.$emit('sendSuccess', {
+          comment: data.new_obj,
+          isArticle: this.isArticle
+        })
         // console.log(data)
         // data.new_obj 刚发送的评论
         this.content = ''
