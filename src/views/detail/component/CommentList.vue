@@ -32,6 +32,7 @@
 
 <script>
 import { getComments } from '@/api/comment'
+import eventHub from '@/utils/eventHub'
 export default {
   name: 'CommentList',
   // isArticle 是否是文章
@@ -48,6 +49,12 @@ export default {
       // 每页获取多少条数据
       limit: 10
     }
+  },
+  created () {
+    // 注册评论发布成功的事件
+    eventHub.$on('sendSuccess', (comment) => {
+      this.list.unshift(comment)
+    })
   },
   methods: {
     async onLoad () {
