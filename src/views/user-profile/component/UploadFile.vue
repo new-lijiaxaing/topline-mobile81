@@ -54,6 +54,13 @@ export default {
       this.$dialog.confirm({
         message: '是否确认该图片作为头像'
       }).then(async () => {
+        // 加载提示
+        this.$toast.loading({
+          duration: 0, // 持续展示 toast
+          forbidClick: true, // 禁用背景点击
+          loadingType: 'spinner',
+          message: '正在上传...'
+        })
         // on confirm
         try {
           const data = await uploadPhoto('photo', this.$refs.file.files[0])
@@ -65,6 +72,8 @@ export default {
         } catch (err) {
           this.$toast.fail('头像上传失败')
         }
+        // 关闭加载提示
+        this.$toast.clear()
       }).catch(() => {
         // on cancel
       })
