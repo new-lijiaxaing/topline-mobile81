@@ -1,14 +1,14 @@
 <template>
   <div>
-    <van-nav-bar
+   <van-nav-bar
       title="个人信息"
       right-text="保存"
       left-arrow
       @click-left="$router.back()"
-      @click-right="btnSave"
     />
+     <!-- @click-right="btnSave" -->
     <van-cell-group>
-      <van-cell title="头像" is-link @click="showUploadFile = true">
+       <van-cell title="头像" is-link @click="showUploadFile = true">
         <div slot="default">
           <img width="30" height="30" :src="userProfile.photo" alt="">
         </div>
