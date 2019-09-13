@@ -83,12 +83,16 @@ export default {
       this.list.push(data)
       // 发送消息
       this.socket.send(data)
+      this.list.push(data)
       // 更新滚动条的位置
       this.update()
     },
     update () {
-      // 更新chat-list的scrollTop
-      this.$refs.chatList.scrollTop = this.$refs.chatList.scrollHeight
+      // 等DOM下一个渲染完毕，再执行
+      this.$nextTick(() => {
+        // 更新chat-list的scrollTop
+        this.$refs.chatList.scrollTop = this.$refs.chatList.scrollHeight
+      })
     }
   }
 }
