@@ -30,6 +30,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "follow" */ '../views/follow/index.vue')
     },
     {
+      path: '/chat',
+      name: 'chat',
+      component: () => import(/* webpackChunkName: "follow" */ '../views/Chat.vue')
+    },
+    {
       path: '/user-profile',
       name: 'user-profile',
       component: () => import(/* webpackChunkName: "user-profile" */ '../views/user-profile/index.vue')
