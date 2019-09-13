@@ -1,7 +1,7 @@
 <template>
   <div class="page-user-chat">
     <van-nav-bar fixed left-arrow @click-left="$router.back()" title="小智同学"></van-nav-bar>
-    <div class="chat-list">
+    <div ref="chatList" class="chat-list">
      <div
         v-for="chat in list"
         :key="chat.timestamp"
@@ -49,6 +49,8 @@ export default {
         robot: true,
         ...data
       })
+      // 更新滚动条的位置
+      this.update()
     })
   },
   deactivated () {
@@ -81,6 +83,12 @@ export default {
       this.list.push(data)
       // 发送消息
       this.socket.send(data)
+      // 更新滚动条的位置
+      this.update()
+    },
+    update () {
+      // 更新chat-list的scrollTop
+      this.$refs.chatList.scrollTop = this.$refs.chatList.scrollHeight
     }
   }
 }
